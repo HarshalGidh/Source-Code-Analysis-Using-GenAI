@@ -1,6 +1,14 @@
 # Source-Code-Analysis-using-GenAI
 
-# How to run?
+## Techstack Used:
+
+- Python
+- LangChain
+- Flask
+- Gemini-Pro
+- ChoromaDB
+
+## How to run?
 ### STEPS:
 
 Clone the repository
@@ -43,11 +51,3 @@ open up localhost:
 ```
 
 
-### Techstack Used:
-
-- Python
-- LangChain
-- Flask
-- OpenAI
-- GPT 3
-- ChoromaDB

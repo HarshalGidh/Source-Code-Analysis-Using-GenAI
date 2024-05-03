@@ -4,19 +4,21 @@ from dotenv import load_dotenv
 import os
 from src.helper import repo_ingestion
 from flask import Flask, render_template, jsonify, request
-from langchain.chat_models import ChatOpenAI
-from langchain.memory import ConversationSummaryMemory
-from langchain.chains import ConversationalRetrievalChain
 
+# from langchain.chat_models import ChatOpenAI
+import google.generativeai as genai
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+# Configure generativeai with your API key
+genai.configure(api_key=GOOGLE_API_KEY)
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.memory import ConversationSummaryMemory, ChatMessageHistory
+from langchain.chains import ConversationChain,ConversationalRetrievalChain
 
 app = Flask(__name__)
 
 
 load_dotenv()
-
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-
 
 embeddings = load_embedding()
 persist_directory = "db"
@@ -26,8 +28,12 @@ vectordb = Chroma(persist_directory=persist_directory,
 
 
 
-llm = ChatOpenAI()
+# llm = ChatOpenAI()
+# model = genai.GenerativeModel('gemini-pro')
+llm = ChatGoogleGenerativeAI(model="gemini-pro",
+                 temperature=0.7, top_p=0.85)
 memory = ConversationSummaryMemory(llm=llm, memory_key = "chat_history", return_messages=True)
+# qa = ConversationChain(llm=llm,memory=memory,verbose=True)
 qa = ConversationalRetrievalChain.from_llm(llm, retriever=vectordb.as_retriever(search_type="mmr", search_kwargs={"k":8}), memory=memory)
 
 
@@ -63,8 +69,6 @@ def chat():
     result = qa(input)
     print(result['answer'])
     return str(result["answer"])
-
-
 
 
 

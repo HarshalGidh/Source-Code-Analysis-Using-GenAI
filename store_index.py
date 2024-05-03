@@ -5,9 +5,9 @@ import os
 
 load_dotenv()
 
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-
+# GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
+# os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 documents = load_repo("repo/")
 text_chunks = text_splitter(documents)

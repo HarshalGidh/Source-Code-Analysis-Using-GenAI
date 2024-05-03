@@ -4,7 +4,9 @@ from langchain.document_loaders.generic import GenericLoader
 from langchain.document_loaders.parsers import LanguageParser
 from langchain.text_splitter import Language
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+
+
 
 
 #clone any github repositories 
@@ -45,7 +47,7 @@ def text_splitter(documents):
 
 #loading embeddings model
 def load_embedding():
-    embeddings=OpenAIEmbeddings(disallowed_special=())
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     return embeddings
 
 
