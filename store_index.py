@@ -1,3 +1,4 @@
+# Import Libraries 
 from src.helper import repo_ingestion, load_repo, text_splitter, load_embedding
 from dotenv import load_dotenv
 from langchain.vectorstores import Chroma
@@ -14,6 +15,11 @@ text_chunks = text_splitter(documents)
 embeddings = load_embedding()
 
 
-#storing vector in choramdb
-vectordb = Chroma.from_documents(text_chunks, embedding=embeddings, persist_directory='./db')
+#storing vector in ChromaDB
+vectordb = Chroma.from_documents(text_chunks #data
+                                 , embedding=embeddings,# embedding model
+                                   persist_directory='./db') #directory to store data
 vectordb.persist()
+
+# Creatring Retriever object
+retriever = vectordb.as_retriever() 

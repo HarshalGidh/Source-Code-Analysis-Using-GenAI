@@ -6,7 +6,7 @@
 - LangChain
 - Flask
 - Gemini-Pro
-- ChoromaDB
+- ChromaDB
 
 ## How to run?
 ### STEPS:
